@@ -303,7 +303,7 @@ class IPvikingRequest
 							break;
 						case 'risk':
 							$output = json_decode($this->getResponseBody(),true);
-							if($output['response']['entries']>=1) 
+							if(isset($output['response']['entries']) && $output['response']['entries']>=1) 
 							{
 								$ret = "<table border=\"1\" class=ipvikingdetails><tr>
                 					<th>Risk Type</th>

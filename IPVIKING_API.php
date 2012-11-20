@@ -127,7 +127,8 @@ class IPvikingRequest
 				$this->display_check .= "<b>IPviking Response:</b> $method of $ent response <b>($t) $http_code</b> <br>\n";				
 				break;
 			case 'blacklist':
-				switch($t) {
+				switch($t) 
+                                {
 					case 204:
 						$this->display_check .= "<b>IPviking Response:</b> $ent is good <br>\n";
 						break;
@@ -145,11 +146,13 @@ class IPvikingRequest
 				}
 				break;
 			case 'reputation':
-				switch($t) {
+				switch($t) 
+                                {
 					case 302:
 						if($this->Geturldisplay()) 
 						{
-							switch($this->getAcceptType()) {
+							switch($this->getAcceptType()) 
+                                                        {
 								case 'application/json':
 									$output = json_decode($this->getResponseBody(),true);
 									$score = $output['response']['reputation_score'];
@@ -159,11 +162,16 @@ class IPvikingRequest
 									$score = $output->response->reputation_score;
 									break;
 							}
-							if($score!=1000) 
-								$uri = "<a href=".$this->GenerateDetailsUrl($ent)." target=_blank>details</a>";
-							$this->display_check .= "<b>IPviking Response:</b> $ent SCORE ".$score." of 1000 $uri<br>\n";
-						} else 
-							$this->display_check .= "<b>IPviking Response:</b> $ent SCORE ".$score." of 1000<br>\n";
+							if($score != 1000)
+                                                        {
+                           				  $uri = "<a href=".$this->GenerateDetailsUrl($ent)." target=_blank>details</a>";
+						          $this->display_check .= "<b>IPviking Response:</b> $ent SCORE ".$score." of 1000 $uri<br>\n";
+                                                        }
+						} 
+                                                else 
+						{ 
+                                                     $this->display_check .= "<b>IPviking Response:</b> $ent SCORE ".$score." of 1000<br>\n";
+                                                }
 						// set global score
 						$this->SetScore($score);
 						break;
@@ -184,14 +192,19 @@ class IPvikingRequest
 									$score = $output->response->risk_factor;
 									break;
 							}
-							if($score!=0) 
-								$uri = "<a href=".$this->GenerateDetailsUrl($ent)." target=_blank>details</a>";
-								$this->display_check .= "<b>IPviking Response:</b> $ent Risk ".$score."% $uri<br>\n";
-							} else 
-							$this->display_check .= "<b>IPviking Response:</b> $ent Risk ".$score."% <br>\n";
-						// set global score
-						$this->SetRisk($score);
-						break;
+							if($score != 0) 
+                                                        {
+						   	    $uri = "<a href=".$this->GenerateDetailsUrl($ent)." target=_blank>details</a>";
+						            $this->display_check .= "<b>IPviking Response:</b> $ent Risk ".$score."% $uri<br>\n";
+ 							}
+						}
+						else
+                                                { 
+						   $this->display_check .= "<b>IPviking Response:</b> $ent Risk ".$score."% <br>\n";
+                                                }
+					// set global score
+					$this->SetRisk($score);
+					break;
 				}
 				break;
 		}
@@ -303,7 +316,7 @@ class IPvikingRequest
 							break;
 						case 'risk':
 							$output = json_decode($this->getResponseBody(),true);
-							if(isset($output['response']['entries']) && $output['response']['entries']>=1) 
+							if(isset($output['response'])) 
 							{
 								$ret = "<table border=\"1\" class=ipvikingdetails><tr>
                 					<th>Risk Type</th>

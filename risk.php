@@ -8,8 +8,8 @@
 	
 	require("IPVIKING_API.php");
 	
-	$ips=array("208.74.76.5","208.74.76.4","208.74.76.1","208.74.76.2","208.74.76.3","208.74.76.6");
-	
+	//$ips=array("208.74.76.1","208.74.76.2","208.74.76.3","208.74.76.4","208.74.76.5","208.74.76.6");
+	$ips = array("208.74.76.5");
 	$good=1;
 	$ips = array_unique($ips);
 	if(count($ips)==0) { $good=0; }	
@@ -17,8 +17,9 @@
 	$total = count($ips);
 	foreach($ips as $dip) 
 	{
+		// echo $dip."\n";
 		// we set the data to supply the resquest 
-		$requestdata = array('apikey' => '6899ec1a65a9565b32f7b6d5848ed45914f590d4e122df6da602a573fbeb4a84',
+		$requestdata = array('apikey' => 'fb1cfe2d2efb24682dd901b5910a4239ff15f14476b0d399a97594f0c254e8f0',
 					 'method' => 'risk',
 					 'ip' => $dip,
 					 'categories' => '',
@@ -39,7 +40,9 @@
 		// this collects the response header information 
 		$ipviking_info = $request->getResponseInfo();
 		$ipv_status = $ipviking_info['http_code'];
-		switch($ipv_status) {
+
+		switch($ipv_status) 
+		{
 			case 204:
 				$request->ipvikingDisplayStatus($ipv_status,$dip,$request->getMethod());
 				$whitelist++;
@@ -55,7 +58,7 @@
 				$request->ipvikingDisplayStatus($ipv_status,$dip,$request->getMethod());
 				//break 2;
 		}
-		$IPvikingDisplay .= $request->IPvikingShowCheck();
+		$IPvikingDisplay = $request->IPvikingShowCheck();
 		$IPvikingDisplay .= $request->IPvikingShowReasons();			
 	}
 	// decide what score threshold to set
@@ -73,17 +76,5 @@
 
 ?>
 &nbsp;</td>
-  </tr>
-  <tr>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>&nbsp;</td>
-  </tr>
-  <tr>
-    <td>&nbsp;</td>
   </tr>
 </table>

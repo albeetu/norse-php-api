@@ -6,9 +6,9 @@
     <td>
 <?php 
 	require("IPVIKING_API.php");
-	$email = "test@yahoo.com";
+	$email = "alberttu@yahoo.c</td>dom";
 	echo "Looking up ".$_SERVER['REMOTE_ADDR']." (You)<br>";
-	echo "Looking up all MX records for test@yahoo.com<br><br>";
+	echo "Looking up all MX records for $email<br><br>";
 	
 	$good=1;
 	$ips=array();	
